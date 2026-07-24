@@ -1,5 +1,3 @@
-setwd("~/LQ")
-
 miRNA_filtered <- t(miRNA_log)
 mRNA_filtered <- t(mRNA_log)
 library(pracma)

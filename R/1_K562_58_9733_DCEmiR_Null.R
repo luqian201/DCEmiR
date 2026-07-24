@@ -1,9 +1,3 @@
-# log2(x+1) 转换
-# mRNA_filtered <- log2(mRNA_scRNA_raw + 1)
-# miRNA_filtered <- log2(miRNA_scRNA_raw + 1)
-## Preprocess the single-cell sequencing data including log2(x+1), compute the average expression values of duplicate genes
-## and remove genes with constant expression values in all cells
-# Load packages
 library(pracma)
 library(WGCNA)
 library(igraph)
