@@ -86,8 +86,8 @@ Redice <- function(priori_graph,
 
 ## Data preprocessing ##
 # Log transformation
-miRNA_raw_norm <- log(miRNA_raw_count + 1)
-mRNA_raw_norm <- log(mRNA_raw_count + 1)
+miRNA_raw_norm <- log2(miRNA_raw_count + 1)
+mRNA_raw_norm <- log2(mRNA_raw_count + 1)
 
 # Remove genes with zero expression in more than 80% of cells
 zero_ratio_miRNA <- rowSums(miRNA_raw_norm == 0) / ncol(miRNA_raw_norm)

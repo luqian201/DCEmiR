@@ -1,0 +1,14 @@
+# R 历史记录和 workspace
+.Rhistory
+#.RData
+.Ruserdata
+.Rapp.history
+
+# RStudio 相关
+.Rproj.user/
+*.Rproj
+
+# 编译产物
+*.o
+*.so
+*.dll

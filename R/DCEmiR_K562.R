@@ -63,8 +63,8 @@ mRNA_raw_norm <- mRNA_raw_norm[zero_ratio_mRNA <= 0.8, ]
 miRNA_scRNA_norm_average <- Averg_Duplicate(t(miRNA_raw_norm))
 mRNA_scRNA_norm_average <- Averg_Duplicate(t(mRNA_raw_norm))
 
-miRNA_scRNA_norm_average <- log(miRNA_scRNA_norm_average+1)
-miRNA_scRNA_norm_average <- log(miRNA_scRNA_norm_average+1)
+miRNA_scRNA_norm_average <- log2(miRNA_scRNA_norm_average+1)
+miRNA_scRNA_norm_average <- log2(miRNA_scRNA_norm_average+1)
 
 # Merge expression matrices (rows = genes, columns = samples)
 fullExpr <- t(cbind(miRNA_scRNA_norm_average, mRNA_scRNA_norm_average))
