@@ -22,7 +22,7 @@ Averg_Duplicate <- function(Exp_scRNA){
   return(temp)
 }
 
-Redice <- function(priori_graph, 
+DCEmiR <- function(priori_graph, 
                    ExpData, 
                    adjustment_type = "parents", 
                    effect_type = "total", 
@@ -100,7 +100,7 @@ fullExpr <- fullExpr[, common_genes, drop = FALSE]   # Preserve matrix structure
 ## Construct DCEmiR gene regulatory networks ##
 HCC_timestart <- Sys.time()
 set.seed(123)
-DCEmiR_TargetScan_HCC <- Redice(
+DCEmiR_TargetScan_HCC <- DCEmiR(
   priori_graph = priori_graph,
   ExpData = fullExpr,
   adjustment_type = "parents",

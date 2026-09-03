@@ -4,11 +4,11 @@
 
 # 📰 Background
 
-In the gene regulation field, miRNA regulation has attracted broad attention due to its potential for clinical translation. However, cancer cells exhibit significant heterogeneity, and miRNA regulatory functions can differ markedly across cell types or even within the same cell under varying conditions. To decipher the molecular mechanisms underlying this heterogeneity, researchers have developed numerous methods for constructing gene regulatory networks (GRNs) using bulk transcriptomic data. While these approaches are valuable, they only capture average regulatory levels across cell populations, failing to reveal cell-specific regulatory heterogeneity. Emerging single-cell methods have begun to address this gap, yet they remain limited by their reliance on correlation-based analyses and lack of causal inference capabilities, with the inherent noise and sparsity of single-cell data further compromising network accuracy.
+MicroRNAs (miRNAs) play an important role in tumorigenesis and progression, making miRNA regulation a key area of cancer research. However, tumor cells are highly heterogeneous, and miRNA regulatory functions may differ across cell types or even within the same cell under varying conditions. To investigate the molecular mechanisms underlying this heterogeneity, researchers have developed numerous methods for constructing gene regulatory networks (GRNs) from bulk transcriptomic data. While these methods are useful, they reflect population averages and cannot capture cell-specific regulatory heterogeneity. Recent single-cell approaches have begun to address this gap, but most rely on correlation-based analyses and lack causal inference capabilities. In addition, the inherent noise and sparsity of single-cell data further challenge network accuracy.
 
-To overcome these limitations, we propose DCEmiR, a novel method for identifying cell-specific miRNA-mRNA causal regulatory networks at single-cell resolution. By integrating single-cell transcriptomic data with prior knowledge of miRNA-target interactions and accounting for inter-cellular heterogeneity, DCEmiR constructs personalized causal regulatory networks at the individual cell level. We applied this method to single-cell datasets from hepatocellular carcinoma and leukemia, systematically characterizing miRNA regulatory networks and revealing key causal pathways across cancer cells. Our findings provide theoretical and methodological support for personalized cancer diagnosis and therapy, with potential applications in early detection, prognosis, drug target discovery, and regenerative medicine.
+To overcome these limitations, we propose DCEmiR, a method for identifying cell-specific miRNA-mRNA causal regulatory networks at single-cell resolution. By integrating single-cell transcriptomic data with prior knowledge of miRNA-target interactions and accounting for inter-cellular heterogeneity, DCEmiR constructs personalized causal networks for individual cells. We applied this method to single-cell datasets from hepatocellular carcinoma and leukemia, systematically characterizing miRNA regulatory networks and identifying key causal pathways across cancer cells. These findings may provide a basis for personalized cancer diagnosis and therapy.
 
-A schematic illustration of **DCEmiR** is shown in the folowing. ![A schematic illustration of DCEmiR](/DCEmiR_schematic_illustration.png) For single-cell transcriptomic data, whether or not they contain prior information on miRNA–mRNA interactions, DCEmiR first screens genes based on existing prior knowledge (where available). Subsequently, using a perturbation strategy, DCEmiR removes cells one by one to construct a control group (background data) and n experimental groups (perturbed data). These n+1 datasets are then processed using a differential causal effects model to generate n+1 causal matrices. By subtracting the corresponding coefficients from the background data from the causal effect coefficients of each perturbation dataset, DCEmiR obtains a differential causal matrix for each cell and visualises it as n directed single-cell gene regulatory network topologies for individual cells.
+A schematic illustration of **DCEmiR** is shown below. ![A schematic illustration of DCEmiR](/DCEmiR_schematic_illustration.png) For single-cell transcriptomic data, DCEmiR first screens genes using prior knowledge (where available). It then applies a leave-one-cell-out perturbation strategy, removing cells one by one to generate one background dataset (all cells) and *n* perturbed datasets (*n*-1 cells each). These *n*+1 datasets are processed through a differential causal effects model to obtain *n*+1 causal effect matrices. By comparing the causal effect coefficients of each perturbed dataset with those from the background data, DCEmiR derives a differential causal effect matrix for each cell. These matrices are visualized as *n* directed single-cell gene regulatory network topologies.
 
 # 📁 Description of each file in R and Data folders
 
@@ -58,7 +58,7 @@ Averg_Duplicate <- function(Exp_scRNA){
   return(temp)
 }
 
-Redice <- function(priori_graph, 
+DCEmiR <- function(priori_graph, 
                    ExpData, 
                    adjustment_type = "parents", 
                    effect_type = "total", 
@@ -136,7 +136,7 @@ fullExpr <- fullExpr[, common_genes, drop = FALSE]   # Preserve matrix structure
 ## Construct DCEmiR gene regulatory networks ##
 HCC_timestart <- Sys.time()
 set.seed(123)
-DCEmiR_TargetScan_HCC <- Redice(
+DCEmiR_TargetScan_HCC <- DCEmiR(
   priori_graph = priori_graph,
   ExpData = fullExpr,
   adjustment_type = "parents",
